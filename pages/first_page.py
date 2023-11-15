@@ -129,21 +129,21 @@ if __name__ == '__main__':
                 if model_options[i] == "general-english-image-caption-clip":
                     model_id = "general-english-image-caption-clip"
                     model_payload = model_predict_by_file(image_bytes=image_b64, MODEL_ID=model_id)
-                    st.write(f"**Model: {model_options[i]}**")
-                    st.write(f"**Image Caption:**")
+                    st.header(f"**Model: {model_options[i]}**")
+                    st.subheader(f"**Image Caption:**")
                     st.write(model_payload.outputs[0].data.text.raw)
                 elif model_options[i] == "general-image-recognition":
                     df = pd.DataFrame(columns=["Concept", "Probability"])
                     model_id = "general-image-recognition"
                     model_payload = model_predict_by_file(image_bytes=image_b64, MODEL_ID=model_id)
-                    st.write(f"**Model: {model_options[i]}**")
-                    st.write(f"**Image Tags:**")
+                    st.header(f"**Model: {model_options[i]}**")
+                    st.subheader(f"**Image Tags:**")
 
                     for j in range(len(model_payload.outputs[0].data.concepts)):
                         # df = df.append({"Concept": model_payload.outputs[0].data.concepts[j].name,
                         #                 "Probability": model_payload.outputs[0].data.concepts[j].value},
                         #                ignore_index=True)
-                        print(model_payload.outputs[0].data.concepts[j].name,':', model_payload.outputs[0].data.concepts[j].value)
+                        st.write(model_payload.outputs[0].data.concepts[j].name,':', model_payload.outputs[0].data.concepts[j].value)
                     # st.write(df)
                 st.write("----"*60)
                         # st.write(f"{j+1}. {model_payload.outputs[0].data.concepts[j].name}")
