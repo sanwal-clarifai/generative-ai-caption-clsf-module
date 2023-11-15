@@ -140,10 +140,11 @@ if __name__ == '__main__':
                     st.write(f"**Image Tags:**")
 
                     for j in range(len(model_payload.outputs[0].data.concepts)):
-                        df = df.append({"Concept": model_payload.outputs[0].data.concepts[j].name,
-                                        "Probability": model_payload.outputs[0].data.concepts[j].value},
-                                       ignore_index=True)
-                    st.write(df)
+                        # df = df.append({"Concept": model_payload.outputs[0].data.concepts[j].name,
+                        #                 "Probability": model_payload.outputs[0].data.concepts[j].value},
+                        #                ignore_index=True)
+                        print(model_payload.outputs[0].data.concepts[j].name,':', model_payload.outputs[0].data.concepts[j].value)
+                    # st.write(df)
                 st.write("----"*60)
                         # st.write(f"{j+1}. {model_payload.outputs[0].data.concepts[j].name}")
 
