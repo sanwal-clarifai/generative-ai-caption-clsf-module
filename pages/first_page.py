@@ -5,15 +5,27 @@ import streamlit as st
 from clarifai_grpc.channel.clarifai_channel import ClarifaiChannel
 from clarifai_grpc.grpc.api import service_pb2_grpc, service_pb2, resources_pb2
 from clarifai_grpc.grpc.api.status import status_code_pb2
+from clarifai.auth.helper import ClarifaiAuthHelper
+from clarifai.client import create_stub
+from clarifai.modules.css import ClarifaiStreamlitCSS
+from clarifai.urls.helper import ClarifaiUrlHelper
+from clarifai_grpc.grpc.api import resources_pb2, service_pb2
+from clarifai_grpc.grpc.api.status import status_code_pb2
+from google.protobuf import json_format
 import base64
 from PIL import Image
 import io
 
-channel = ClarifaiChannel.get_json_channel(base_url='https://api-dev.clarifai.com/')
-stub = service_pb2_grpc.V2Stub(channel)
 
-channel_prod = ClarifaiChannel.get_grpc_channel()
-stub_prod = service_pb2_grpc.V2Stub(channel_prod)
+# channel = ClarifaiChannel.get_json_channel()
+# stub = service_pb2_grpc.V2Stub(channel)
+
+# channel_prod = ClarifaiChannel.get_grpc_channel()
+# stub_prod = service_pb2_grpc.V2Stub(channel_prod)
+
+auth = ClarifaiAuthHelper.from_streamlit(st)
+stub = auth.get_stub()
+userDataObject = auth.get_user_app_id_proto()
 
 def model_predict_by_file(auth_obj,
                           image_path,
@@ -114,7 +126,8 @@ if __name__ == '__main__':
     # st.image(image, use_column_width=True, caption="Clarifai Logo", width=100)
 
     st.title("Generative AI and Clarifai - Stable Diffusion")
-
+    print(auth)
+    st.stop()
 
     with st.sidebar:
         st.image(image, use_column_width=True, caption="Clarifai Logo", width=100)
